@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Dice In Piece</title>
+    {# Favicon #}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    {# Css+JS #}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/reset.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/blocks.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pages/base.css' %}" />
+    {%block head%}{%endblock%}
+</head>
+
+<body>
+    <header>
+        <nav class="navbar-logo">
+            <a href="/"><img src="{% static 'favicon/logo.svg' %}" alt="Dice In Piece"><span>DIP</span></a>
+        </nav>
+        <nav class="navbar">
+            <a href="#">Новости</a>
+            <a href="#">Каталог</a>
+            <a href="#">Контакты</a>
+        </nav>
+        <nav class="navbar">
+            <a href="#">Войти</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+
+    <footer>
+        <p>&copy; 2023 - Dice In Piece</p>
+    </footer>
+</body>
+
+</html>
