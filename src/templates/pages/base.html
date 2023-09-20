@@ -19,19 +19,24 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar-logo">
-            <a href="/"><img src="{% static 'favicon/logo.svg' %}" alt="Dice In Piece"><span>DIP</span></a>
-        </nav>
-        <nav class="navbar">
+    <header class="logo">
+        <a href="/">
+            <img src="{% static 'favicon/home.svg' %}" alt="Dice Harmony" />
+            <span>Dice Harmony</span>
+        </a>
+    </header>
+    <nav class="navbar">
+        <div class="navbar-left"></div>
+        <div class="navbar-center">
             <a href="#">Новости</a>
             <a href="#">Каталог</a>
             <a href="#">Контакты</a>
-        </nav>
-        <nav class="navbar">
-            <a href="#">Войти</a>
-        </nav>
-    </header>
+        </div>
+        <div class="navbar-right">
+            <a href="#">К</a>
+            <a href="#">В</a>
+        </div>
+    </nav>
 
     <main>
         {% block content %}{% endblock %}
@@ -39,7 +44,7 @@
 
 
     <footer>
-        <p>&copy; 2023 - Dice In Piece</p>
+        <p>&copy; 2023 - Dice Harmony</p>
     </footer>
 </body>
 
