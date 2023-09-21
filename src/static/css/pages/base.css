@@ -22,9 +22,9 @@ body {
     margin-right: auto;
     height: 150px;
     background-color: #6AB8C6;
-    margin-bottom: 30px;
     display: flex;
     justify-content: center;
+    border-bottom: 2px solid white;
 }
 
 .logo a {
@@ -51,9 +51,7 @@ body {
 /* navigation */
 
 .navbar {
-    border-top: 1px solid rgb(224, 224, 224);
-    border-bottom: 1px solid rgb(224, 224, 224);
-    background-color: white;
+    background-color: #6AB8C6;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,12 +63,16 @@ body {
 .navbar-left,
 .navbar-center,
 .navbar-right {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 2em;
+}
+
+.navbar-center {
+    gap: 6em;
 }
 
 .navbar-right {
@@ -89,19 +91,20 @@ body {
     padding-bottom: 5px;
     text-decoration: none;
     font-size: 20px;
+    color: white;
 }
 
 
 .navbar-center>a:visited,
 .navbar-right>a:visited {
-    color: rgb(46, 46, 46);
+    color: white;
     text-decoration: none;
 }
 
 /* a bit animation */
 .navbar-center>a {
     width: calc(100%);
-    background-image: linear-gradient(transparent calc(100% - 1px), black 10px);
+    background-image: linear-gradient(transparent calc(100% - 1px), rgb(255, 255, 255) 10px);
     background-repeat: no-repeat;
     background-size: 0% 100%;
     transition: background-size 0.3s;
@@ -128,7 +131,8 @@ footer {
     background-color: #6AB8C6;
     color: white;
 }
-footer > p {
+
+footer>p {
     margin-right: 0;
     margin-left: auto;
     padding-right: 10px;
