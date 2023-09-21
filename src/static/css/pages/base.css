@@ -24,7 +24,6 @@ body {
     background-color: #6AB8C6;
     display: flex;
     justify-content: center;
-    border-bottom: 2px solid white;
 }
 
 .logo a {
@@ -46,6 +45,19 @@ body {
 .logo span {
     padding-left: 10px;
     font-size: 60px;
+}
+
+.wave {
+    background-color: #6AB8C6;
+    padding-bottom: 20px;
+}
+
+.wave>div {
+    height: 32px;
+    background:
+        radial-gradient(135.16px at 50% calc(100% + 120.00px), #ffffff00 calc(99% - 2px), #ffffff calc(101% - 2px) 99%, #ffffff00 101%) calc(50% - 120px) calc(50% - 31px + .5px)/240px 62px repeat-x,
+        radial-gradient(135.16px at 50% -120px, #ffffff00 calc(99% - 2px), #ffffff calc(101% - 2px) 99%, #ffffff00 101%) 50% calc(50% + 31px)/240px 62px repeat-x;
+
 }
 
 /* navigation */
