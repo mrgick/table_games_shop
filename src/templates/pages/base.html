@@ -29,16 +29,19 @@
             <span>Dice Harmony</span>
         </a>
     </header>
-    <div class="wave"><div></div></div>
+    <div class="wave">
+        <div></div>
+    </div>
     <nav class="navbar">
         <div class="navbar-left"></div>
         <div class="navbar-center">
             <a href="#">Новости</a>
             <a href="#">Каталог</a>
-            <a href="#">Контакты</a>
+            <a href="{% url 'contact' %}">Контакты</a>
         </div>
         <div class="navbar-right">
-            <a href="#"><span class="material-symbols-outlined"><span class="material-symbols-outlined">shopping_cart</span></a>
+            <a href="#"><span class="material-symbols-outlined"><span
+                        class="material-symbols-outlined">shopping_cart</span></a>
             <a href="#"><span class="material-symbols-outlined">person</span></a>
         </div>
     </nav>

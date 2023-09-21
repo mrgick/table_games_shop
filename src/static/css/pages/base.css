@@ -129,8 +129,7 @@ body {
 
 /* main */
 main {
-    padding-top: 44px;
-    min-height: calc(100% - 24px);
+    min-height: calc(100% - 290px);
 }
 
 /* footer */
