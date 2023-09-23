@@ -15,7 +15,7 @@
     {# Css+JS #}
     <link rel="stylesheet" type="text/css" href="{% static 'css/base/reset.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/base/blocks.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/pages/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pages/main/base.css' %}" />
     {#Icons#}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
@@ -42,14 +42,16 @@
         <div class="navbar-right">
             <a href="#"><span class="material-symbols-outlined"><span
                         class="material-symbols-outlined">shopping_cart</span></a>
-            <a href="#"><span class="material-symbols-outlined">person</span></a>
+            <a href="{% url 'login' %}"><span class="material-symbols-outlined">person</span></a>
         </div>
     </nav>
 
     <main>
-        {% block content %}{% endblock %}
-    </main>
+        <div class="wrapper">
+            {% block content %}{% endblock %}
 
+        </div>
+    </main>
 
     <footer>
         <p>&copy; {% now "Y" %} Dice Harmony</p>

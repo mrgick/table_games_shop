@@ -1,0 +1,53 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/main/form.css' %}" />
+<script src="{% static 'js/pages/index.js' %}"></script>
+{% endblock head %}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<form action={{action}} method="post" class="form">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}" title="{{ field.label }}">
+            {{field.label}}
+        </label>
+        {{ field }}
+    </div>
+    <div class="form-group">
+        <div class="form-group-help">{{ field.help_text }}</div>
+        {%if field.errors %}
+        <div class="form-group-error">{{field.errors}}</div>
+        {%endif%}
+    </div>
+    {% endfor %}
+
+    {% for error in form.non_field_errors %}
+    <div class="form-group">
+        <strong class="form-group-error">{{error|escape}}</strong>
+    </div>
+    {% endfor %}
+
+    {% if button %}
+    <div class="form-group">
+        <button class="form-group-btn" type="submit">{{button}}</button>
+    </div>
+    {% endif %}
+
+    {% if link %}
+    <div class="form-group">
+        <a class="form-group-link" href="{% url link.value %}">{{link.name}}</a>
+    </div>
+    {% endif %}
+</form>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

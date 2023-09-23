@@ -1,0 +1,24 @@
+{% load static %}
+
+{% block signup %}
+<dialog class="modal" open>
+    <p>123</p>
+    {{form}}
+    {# <form method="post" class="modal__form" id="signup" action="register/">
+        {% csrf_token %}
+        <div class="modal-close" id="close-modal">
+            <svg width="16" height="16">
+                <use xlink:href="{% static 'main/img/close.svg' %}#close"></use>
+            </svg>
+        </div>
+        <div class="modal-top">
+            <img src="{% static 'main/img/logo.png' %}" alt="" class="header-logo__img">
+        </div>
+        {% for row in form %}
+        <div class="modal-field">
+            {{row}}
+        </div>
+        {% endfor %}
+    </form> #}
+</dialog>
+{% endblock %}

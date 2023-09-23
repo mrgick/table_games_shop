@@ -1,14 +1,10 @@
-* {
-    box-sizing: border-box;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
 
 
 body {
     margin: 0;
     font-family: 'Merriweather', serif;
-    font-size: 16px;
+    font-size: 18px;
     color: rgb(46, 46, 46);
     height: 100vh;
     width: 100vw;
@@ -129,7 +125,17 @@ body {
 
 /* main */
 main {
-    min-height: calc(100% - 290px);
+    min-height: calc(100% - 319px);
+}
+
+/* wrapper */
+.wrapper {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 /* footer */

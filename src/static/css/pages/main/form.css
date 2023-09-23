@@ -1,0 +1,59 @@
+.form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    gap: 4em;
+    margin-bottom: 30px;
+}
+
+.form-group>label {
+    padding-top: 20px;
+    flex: 50%;
+}
+
+.form-group>input {
+    border: 1px solid #6AB8C6;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 20px;
+    margin-top: 15px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    flex: 50%;
+}
+
+.form-group-help {
+    flex: 50%;
+    font-size: 16px;
+    color: blue;
+    margin-bottom: 10px;
+}
+
+.form-group-error {
+    color: red;
+    font-size: 16px;
+    flex: 50%;
+    margin-bottom: 10px;
+}
+
+.form-group-btn {
+    padding: 12px 28px;
+    margin-top: 20px;
+    color: white;
+    background-color: #6AB8C6;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.form-group-link {
+    margin-top: 20px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
