@@ -1,0 +1,45 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/news/detail.css' %}" />
+{% endblock head %}
+
+{% block content %}
+
+<h1>{{object.title}}</h1>
+<div class="description">
+    <img src="{{object.image.url}}" alt="Картинка новости">
+    <p>{{object.content|linebreaksbr}}</p>
+</div>
+<a href="{% url 'news_list' %}">Назад к новостям</a>
+{# TOOD: Комментарии #}
+
+{% if user.is_authenticated %}
+
+<h3>Комментарии</h3>
+
+<form class="form-horizontal" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        {% for field in form%}
+        <div class="col-md-12 control-label">{{ field }}</div>
+        {% endfor%}
+    </div>
+    <div><button type="submit" class="save btn btn-default"> Оставить комментарий </button>
+</form>
+{% else %}
+<h3> Для добавления своего комментария, пожалуйста, авторизуйтесь </h3>
+{% endif %}
+
+{% for comment in comments %}
+<hr />
+<div class="row">
+    <h5 class="col-md-10" style="font-weight: bold;"> {{comment.author}} </h5>
+    {# <h6 class="col-md-2" style="color:grey; text-align:right">{{comment.get_date}}</h6> #}
+</div>
+<div class="row">
+    <p class="col-md-12"> {{comment.text|linebreaksbr}} </p>
+</div>
+{% endfor %}
+
+{% endblock %}

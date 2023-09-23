@@ -1,0 +1,20 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/news/list.css' %}" />
+{% endblock head %}
+
+{% block content %}
+
+<h1>Новости</h1>
+{% for news in object_list %}
+<article class="news" onclick="location.href='{{news.id}}/';">
+    <h6>{{news.title}}</h6>
+    <p>{{news.description}}</p>
+    <div>
+        <a href="{{news.id}}/">Подробнеe</a>
+        <p>{{news.date|date:'Y-m-d'}}</p>
+    </div>
+</article>
+{% endfor %}
+{% endblock %}

@@ -1,16 +1,22 @@
 from django.views.generic import DetailView, ListView
 
-from .models import News
+from .forms import CommentForm
+from .models import Comment, News
 
 
 class NewsList(ListView):
-    template_name = "app/blog.html"
+    template_name = "pages/news/list.html"
     model = News
 
 
 class NewsDetail(DetailView):
-    template_name = "app/blog.html"
+    template_name = "pages/news/detail.html"
     model = News
+
+    def get_context_data(self, **kwargs):
+        kwargs["comments"] = Comment.objects.filter(news=kwargs["object"].id)
+        kwargs["form"] = CommentForm()
+        return super().get_context_data(**kwargs)
 
 
 # class CreateNews(FormView):
