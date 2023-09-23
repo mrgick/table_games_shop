@@ -5,41 +5,37 @@
 {% endblock head %}
 
 {% block content %}
-
 <h1>{{object.title}}</h1>
-<div class="description">
-    <img src="{{object.image.url}}" alt="Картинка новости">
-    <p>{{object.content|linebreaksbr}}</p>
-</div>
-<a href="{% url 'news_list' %}">Назад к новостям</a>
-{# TOOD: Комментарии #}
-
-{% if user.is_authenticated %}
-
-<h3>Комментарии</h3>
-
-<form class="form-horizontal" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-        {% for field in form%}
-        <div class="col-md-12 control-label">{{ field }}</div>
-        {% endfor%}
+<div class="container">
+    <div class="description">
+        <img src="{{object.image.url}}" alt="Картинка новости">
+        <p>{{object.content|linebreaksbr}}</p>
     </div>
-    <div><button type="submit" class="save btn btn-default"> Оставить комментарий </button>
-</form>
-{% else %}
-<h3> Для добавления своего комментария, пожалуйста, авторизуйтесь </h3>
-{% endif %}
+    <p class="date">Опубликована: {{object.date|date:'Y-m-d'}}</p>
+    <a class="link" href="{% url 'news_list' %}">Назад к новостям</a>
+    {# TOOD: Комментарии #}
 
-{% for comment in comments %}
-<hr />
-<div class="row">
-    <h5 class="col-md-10" style="font-weight: bold;"> {{comment.author}} </h5>
-    {# <h6 class="col-md-2" style="color:grey; text-align:right">{{comment.get_date}}</h6> #}
-</div>
-<div class="row">
-    <p class="col-md-12"> {{comment.text|linebreaksbr}} </p>
-</div>
-{% endfor %}
 
+    <h3>Комментарии</h3>
+
+    {% if user.is_authenticated %}
+
+    <form class="form" method="POST">
+        {% csrf_token %}
+        {{form.text}}
+        <button type="submit"> Оставить комментарий </button>
+    </form>
+
+
+    {% else %}
+    <h4> Для добавления своего комментария, пожалуйста, авторизуйтесь </h4>
+    {% endif %}
+
+    {% for comment in comments %}
+    <article class="comment" id="{{comment.id}}">
+        <span><strong>{{comment.author}}</strong> ({{comment.date|date:'Y-m-d h:i'}}) </span>
+        <p> {{comment.text|linebreaksbr}} </p>
+    </article>
+    {% endfor %}
+</div>
 {% endblock %}

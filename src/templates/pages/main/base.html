@@ -40,9 +40,14 @@
             <a href="{% url 'contact' %}">Контакты</a>
         </div>
         <div class="navbar-right">
+            {% if user.is_authenticated %}
             <a href="#"><span class="material-symbols-outlined"><span
                         class="material-symbols-outlined">shopping_cart</span></a>
+            {% endif %}
             <a href="{% url 'login' %}"><span class="material-symbols-outlined">person</span></a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}"><span class="material-symbols-outlined">logout</span></a>
+            {% endif %}
         </div>
     </nav>
 

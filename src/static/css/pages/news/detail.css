@@ -1,6 +1,8 @@
-.description {
+.container {
     max-width: 1280px;
-    margin: 40px 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .description>img {
@@ -14,4 +16,61 @@
 .description > p {
     line-height: 25px;
     text-align: justify;
+}
+
+.date {
+    margin-left: auto;
+    margin-right: 0;
+    color: grey;
+}
+
+.link {
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.form {
+    margin: 20px 0;
+}
+
+.form > textarea {
+    border: 1px solid #6AB8C6;
+    min-width: 1024px;
+}
+
+.form > button {
+    padding: 12px 28px;
+    margin: 20px 0;
+    color: white;
+    background-color: #6AB8C6;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+h3 {
+    margin: 20px;
+    margin-right: auto;
+    margin-left: 0;
+    font-weight: bold;
+    font-size: 24px;
+    color: #2fb3ca;
+}
+
+h4 {
+    margin: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    font-weight: bold;
+    color: #2fb3ca;
+}
+
+.comment {
+    margin-top: 50px;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }

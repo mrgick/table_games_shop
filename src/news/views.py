@@ -1,3 +1,5 @@
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import DetailView, ListView
 
 from .forms import CommentForm
@@ -15,8 +17,19 @@ class NewsDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         kwargs["comments"] = Comment.objects.filter(news=kwargs["object"].id)
-        kwargs["form"] = CommentForm()
+        if self.request.user.is_authenticated:
+            kwargs["form"] = CommentForm()
         return super().get_context_data(**kwargs)
+
+    def post(self, request, pk):
+        form = CommentForm(request.POST)
+        if request.user.is_authenticated and form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.news = News.objects.get(id=pk)
+            comment.save()
+            return redirect(f'{reverse("news_detail", args=[pk])}#{comment.id}')
+        return redirect("news_detail", pk=pk)
 
 
 # class CreateNews(FormView):
