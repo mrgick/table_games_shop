@@ -1,28 +1,29 @@
-from django.utils import timezone
-
-from django.views.generic.base import View, TemplateView
-from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
-from django.urls.base import reverse
+from django.utils import timezone
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 
-from django.http.response import JsonResponse
 
 class Home(TemplateView):
-    """ Class for home page. """
+    """Class for home page."""
+
     template_name = "pages/main/index.html"
 
+
 class Contact(TemplateView):
-    """ Class for contacts page. """
+    """Class for contacts page."""
+
     template_name = "pages/main/contact.html"
 
+
 class Registration(FormView):
-    """ Class for the registration. """
+    """Class for the registration."""
+
     template_name = "pages/main/form.html"
     form_class = UserCreationForm
     success_url = "/"
 
     def form_valid(self, form):
-
         user = form.save(commit=False)
         user.is_staff = False
         user.is_active = True

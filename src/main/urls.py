@@ -1,7 +1,8 @@
-from django.urls import path
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import path
+
 from . import views
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 urlpatterns = [
     path("", views.Home.as_view(), name="home"),
