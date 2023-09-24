@@ -16,11 +16,11 @@ class News(models.Model):
     author = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Автор"
     )
-    image = models.FileField(default="temp.jpg", verbose_name="Путь к картинке")
+    image = models.ImageField(null=True, blank=True, verbose_name="Изображение")
 
     def get_absolute_url(self):
         """Метод возвращает строку с URL-адресом записи."""
-        return reverse("news_single", args=[str(self.id)])
+        return reverse("news_detail", args=[str(self.id)])
 
     def __str__(self):
         return self.title

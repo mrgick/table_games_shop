@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
@@ -38,5 +39,5 @@ class Registration(FormView):
         kwargs["title"] = "Регистрация"
         kwargs["action"] = "."
         kwargs["button"] = "Зарегистрироваться"
-        kwargs["link"] = {"name": "Уже есть аккаунт?", "value": "login"}
+        kwargs["link"] = {"name": "Уже есть аккаунт?", "value": reverse("login")}
         return super().get_context_data(**kwargs)

@@ -1,6 +1,7 @@
 from django import forms
+from django.forms.widgets import ClearableFileInput as DjangoClearableFileInput
 
-from .models import Comment
+from .models import Comment, News
 
 
 class CommentForm(forms.ModelForm):
@@ -16,15 +17,19 @@ class CommentForm(forms.ModelForm):
         labels = {"text": "Комментарий"}
 
 
-# class NewsForm(forms.ModelForm):
-#     image = forms.FileField(required=False, label="Изображение")
+class ClearableFileInput(DjangoClearableFileInput):
+    # template_name = "blocks/clearable_file_input.html"
+    def _render(self, *args, **kwargs):
+        r = super()._render(*args, **kwargs)
+        r = r.replace("<br>", "</div><div>")
+        return f"<div class='form-group-file'><div>{r}</div></div>"
 
-#     class Meta:
-#         model = News
-#         fields = ("title", "description", "content", "image")
-#         labels = {
-#             "title": "Заголовок",
-#             "description": "Краткое содержание",
-#             "content": "Полное содержание",
-#             "image": "Изображение",
-#         }
+
+class NewsForm(forms.ModelForm):
+    image = forms.ImageField(
+        required=False, widget=ClearableFileInput, label="Изображение"
+    )
+
+    class Meta:
+        model = News
+        fields = ("title", "description", "content", "image")

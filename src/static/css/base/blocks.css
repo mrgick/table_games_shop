@@ -15,3 +15,22 @@ strong {
     font-size: 20px;
     font-weight: bold;
 }
+
+button {
+    padding: 12px 28px;
+    color: white;
+    background-color: #6AB8C6;
+    border-radius: 20px;
+    cursor: pointer;
+}
+button > a, button > a:visited{
+    text-decoration: none;
+    color:white;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    background-color: #55909b;
+    transform-origin: bottom;
+}

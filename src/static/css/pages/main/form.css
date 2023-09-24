@@ -1,6 +1,5 @@
 .form {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 10px;
 }
 
 .form-group {
@@ -21,9 +20,18 @@
     padding-right: 15px;
     border-radius: 20px;
     margin-top: 15px;
-    padding-top: 2.5px;
-    padding-bottom: 2.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     flex: 50%;
+}
+
+.form-group>textarea {
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #6AB8C6;
+    min-width: 500px;
+    max-width: 1024px;
 }
 
 .form-group-help {
@@ -43,12 +51,6 @@
 }
 
 .form-group-btn {
-    padding: 12px 28px;
-    margin-top: 20px;
-    color: white;
-    background-color: #6AB8C6;
-    border-radius: 20px;
-    cursor: pointer;
     margin-left: auto;
     margin-right: 0;
 }
@@ -58,4 +60,21 @@
     cursor: pointer;
     margin-left: auto;
     margin-right: auto;
+}
+
+.form-group-file {
+    display: flex;
+}
+
+.form-group-file>div:first-child {
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+}
+
+.form-group-file input[type=checkbox] {
+    transform: scale(2);
+    padding: 10px;
+    width: 20px;
+    margin-left: 38px;
 }

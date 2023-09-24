@@ -1,8 +1,10 @@
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import DeletionMixin, FormView
 
-from .forms import CommentForm
+from .forms import CommentForm, NewsForm
 from .models import Comment, News
 
 
@@ -32,21 +34,58 @@ class NewsDetail(DetailView):
         return redirect("news_detail", pk=pk)
 
 
-# class CreateNews(FormView):
-#     """Class for the registration."""
+class CreateNews(FormView):
+    """Class for the create/edit news."""
 
-#     template_name = "pages/main/form.html"
-#     # form_class = UserCreationForm
-#     success_url = "/"
+    template_name = "pages/main/form.html"
+    form_class = NewsForm
+    success_url = "/news/"
+    # TODO: perms
 
-#     def form_valid(self, form):
-#         news = form.save(commit=False)
-#         news.author = self.request.user
-#         news.save()
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        news = form.save(commit=False)
+        news.author = self.request.user
+        news.save()
+        return redirect("news_detail", pk=news.id)
 
-#     def get_context_data(self, **kwargs):
-#         kwargs["title"] = "Создать новость"
-#         kwargs["action"] = "."
-#         kwargs["button"] = "Создать"
-#         return super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Создание новости"
+        kwargs["action"] = "."
+        kwargs["button"] = "Создать"
+        kwargs["link"] = {"name": "Назад к новостям", "value": reverse("news_list")}
+        return super().get_context_data(**kwargs)
+
+
+class NewsEditDelete(SingleObjectMixin, FormView, DeletionMixin):
+    """Class for the create/edit news."""
+
+    template_name = "pages/main/form.html"
+    form_class = NewsForm
+    model = News
+    success_url = "/news/"
+    # TODO: perms
+
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        return super().get(self, *args, **kwargs)
+
+    def form_valid(self, form):
+        news = form.save(commit=False)
+        news.author = self.request.user
+        news.save()
+        return redirect("news_detail", pk=news.id)
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Редактирование новости"
+        kwargs["action"] = "."
+        kwargs["button"] = "Сохранить"
+        kwargs["link"] = {
+            "name": "Назад к новости",
+            "value": reverse("news_detail", args=[self.object.id]),
+        }
+        return super().get_context_data(**kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["instance"] = self.get_object()
+        return kwargs

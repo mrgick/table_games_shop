@@ -17,7 +17,7 @@ urlpatterns = [
             extra_context={
                 "title": "Авторизация",
                 "action": ".",
-                "link": {"name": "Ещё нет аккаунта?", "value": "registration"},
+                "link": {"name": "Ещё нет аккаунта?", "value": "/registration/"},
                 "button": "Войти",
             },
         ),

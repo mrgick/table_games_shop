@@ -36,7 +36,7 @@
 
 .form > textarea {
     border: 1px solid #6AB8C6;
-    min-width: 1024px;
+    min-width: 1000px;
 }
 
 .form > button {
@@ -73,4 +73,19 @@ h4 {
     display: flex;
     flex-direction: column;
     gap: 1em;
+}
+
+.news-btn {
+    display: flex;
+    margin:40px 0;
+
+}
+
+.news-btn > button:first-child{
+    margin-right: auto;
+    margin-left: 0;
+}
+.news-btn > button:last-child{
+    background-color: rgb(238, 95, 95);
+    margin-left: auto;
 }
