@@ -53,7 +53,7 @@ class Comment(models.Model):
         return self.date.strftime("%d-%m-%Y, %H:%M")
 
     def __str__(self):
-        return f"{self.post.title} {self.author.username} ({self.get_date()})"
+        return f"{self.news.title} {self.author.username} ({self.get_date()})"
 
     class Meta:
         db_table = "Comments"

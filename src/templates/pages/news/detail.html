@@ -11,7 +11,7 @@
     {% if user.is_staff%}
     <div class="news-btn">
         <button><a href="{% url 'news_edit' pk=object.id %}">Изменить</a></button>
-        <button><a href="{% url 'news_create' %}">Удалить</a></button>
+        <button><a href="{% url 'news_delete' pk=object.id %}">Удалить</a></button>
     </div>
     {% endif %}
 
