@@ -129,7 +129,6 @@ main {
     min-height: calc(100% - 319px);
 }
 
-/* wrapper */
 .wrapper {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -138,6 +137,13 @@ main {
     justify-content: center;
     flex-direction: column;
 }
+.container {
+    max-width: 1280px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
 
 /* footer */
 footer {

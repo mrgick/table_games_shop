@@ -7,43 +7,43 @@
 {% block content %}
 <h1>{{object.title}}</h1>
 
-<div class="container">
-    {% if user.is_staff%}
-    <div class="news-btn">
-        <button><a href="{% url 'news_edit' pk=object.id %}">Изменить</a></button>
-        <button><a href="{% url 'news_delete' pk=object.id %}">Удалить</a></button>
-    </div>
-    {% endif %}
 
-    <div class="description">
-        {%if object.image%}
-        <img src="{{object.image.url}}" alt="Картинка новости">
-        {%endif%}
-        <p>{{object.content|linebreaksbr}}</p>
-    </div>
-    <p class="date">Опубликована: {{object.date|date:'Y-m-d'}}</p>
-    <a class="link" href="{% url 'news_list' %}">Назад к новостям</a>
-
-    <h3>Комментарии</h3>
-
-    {% if user.is_authenticated %}
-
-    <form class="form" method="POST">
-        {% csrf_token %}
-        {{form.text}}
-        <button type="submit"> Оставить комментарий </button>
-    </form>
-
-
-    {% else %}
-    <h4> Для добавления своего комментария, пожалуйста, авторизуйтесь </h4>
-    {% endif %}
-
-    {% for comment in comments %}
-    <article class="comment" id="{{comment.id}}">
-        <span><strong>{{comment.author}}</strong> ({{comment.date|date:'Y-m-d h:i'}}) </span>
-        <p> {{comment.text|linebreaksbr}} </p>
-    </article>
-    {% endfor %}
+{% if user.is_staff%}
+<div class="news-btn">
+    <button><a href="{% url 'news_edit' pk=object.id %}">Изменить</a></button>
+    <button><a href="{% url 'news_delete' pk=object.id %}">Удалить</a></button>
 </div>
+{% endif %}
+
+<div class="description">
+    {%if object.image%}
+    <img src="{{object.image.url}}" alt="Картинка новости">
+    {%endif%}
+    <p>{{object.content|linebreaksbr}}</p>
+</div>
+<p class="date">Опубликована: {{object.date|date:'Y-m-d'}}</p>
+<a class="link" href="{% url 'news_list' %}">Назад к новостям</a>
+
+<h3>Комментарии</h3>
+
+{% if user.is_authenticated %}
+
+<form class="form" method="POST">
+    {% csrf_token %}
+    {{form.text}}
+    <button type="submit"> Оставить комментарий </button>
+</form>
+
+
+{% else %}
+<h4> Для добавления своего комментария, пожалуйста, авторизуйтесь </h4>
+{% endif %}
+
+{% for comment in comments %}
+<article class="comment" id="{{comment.id}}">
+    <span><strong>{{comment.author}}</strong> ({{comment.date|date:'Y-m-d h:i'}}) </span>
+    <p> {{comment.text|linebreaksbr}} </p>
+</article>
+{% endfor %}
+
 {% endblock %}
