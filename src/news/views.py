@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import (
@@ -38,13 +39,13 @@ class NewsDetail(DetailView):
         return redirect("news_detail", pk=pk)
 
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
     """Class for the create/edit news."""
 
     template_name = "pages/main/form.html"
     form_class = NewsForm
     success_url = "/news/"
-    # TODO: perms
+    permission_required = "news.add_news"
 
     def form_valid(self, form):
         news = form.save(commit=False)
@@ -60,14 +61,14 @@ class NewsCreate(CreateView):
         return super().get_context_data(**kwargs)
 
 
-class NewsEdit(UpdateView):
+class NewsEdit(PermissionRequiredMixin, UpdateView):
     """Class for the create/edit news."""
 
     template_name = "pages/main/form.html"
     form_class = NewsForm
     model = News
     success_url = "/news/"
-    # TODO: perms
+    permission_required = "news.change_news"
 
     def form_valid(self, form):
         news = form.save(commit=False)
@@ -86,15 +87,14 @@ class NewsEdit(UpdateView):
         return super().get_context_data(**kwargs)
 
 
-class NewsDelete(DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
     """Class for the create/edit news."""
 
     template_name = "pages/main/form.html"
-    # form_class = NewsForm
     model = News
     success_url = "/news/"
+    permission_required = "news.delete_news"
 
-    # TODO: perms
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         kwargs.update(
