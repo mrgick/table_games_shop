@@ -1,0 +1,76 @@
+body {
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+
+main {
+    background: radial-gradient(at center, rgb(107, 124, 200), rgb(107, 185, 199));
+    min-height: calc(100% - 289px);
+}
+
+.navbar {
+    box-shadow: 0px 10px 10px rgba(255, 255, 255, 0.2);
+}
+
+footer {
+    box-shadow: 0px -10px 10px rgba(255, 255, 255, 0.2);
+}
+
+.wrapper {
+    margin: 0;
+}
+
+.about {
+    margin: 20px 0;
+}
+
+.about>p {
+    line-height: 30px;
+    text-align: justify;
+}
+
+.news {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    margin: 30px auto;
+}
+
+.news>article {
+    padding: 20px;
+    border: 2px solid white;
+    border-top-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 300px;
+    box-shadow: 0px 10px 10px rgba(255, 255, 255, 0.2), 10px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.news>article:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    transform-origin: bottom;
+}
+
+.news>article>h6 {
+    text-align: right;
+}
+
+.news>article>p:first-of-type {
+    text-align: justify;
+    height: 200px;
+    overflow: hidden;
+    line-height: 25px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    word-break: normal;
+}
+
+.news>article>p:last-of-type {
+    text-align: left;
+}

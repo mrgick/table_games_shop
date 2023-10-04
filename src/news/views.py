@@ -99,7 +99,7 @@ class NewsDelete(PermissionRequiredMixin, DeleteView):
         kwargs = super().get_context_data(**kwargs)
         kwargs.update(
             {
-                "title": f"Удаление новости c id={self.object.id} и именем '{self.object}'",
+                "title": f'Удалить новость "{self.object}"?',
                 "action": ".",
                 "button": "Удалить",
                 "link": {

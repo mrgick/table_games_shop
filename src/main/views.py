@@ -4,11 +4,17 @@ from django.utils import timezone
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
+from news.models import News
+
 
 class Home(TemplateView):
     """Class for home page."""
 
     template_name = "pages/main/index.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["object_list"] = News.objects.all().order_by("-id")[:3]
+        return super().get_context_data(**kwargs)
 
 
 class Contact(TemplateView):
