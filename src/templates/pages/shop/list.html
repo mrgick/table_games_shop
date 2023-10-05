@@ -1,0 +1,14 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/shop/list.css' %}" />
+{% endblock head %}
+
+{% block content %}
+
+<h1>Каталог</h1>
+
+{% for product in object_list %}
+product
+{% endfor %}
+{% endblock %}

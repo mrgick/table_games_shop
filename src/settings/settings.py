@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "main",
     "news",
-    "orders",
+    "shop",
 ]
 
 MIDDLEWARE = [
