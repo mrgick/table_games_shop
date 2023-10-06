@@ -9,16 +9,18 @@
 <h1>Каталог</h1>
 <div class="shop">
     <section class="categories">
-        {% for category in categories%}
-        <article class="category">
-            {% if category.id == active_category%}
-            <a href="{% url 'product_list'%}"><strong>{{category.title}}</strong></a>
-            {% else%}
-            <a href="{% url 'product_list' category=category.id%}">{{category.title}}</a>
-            {% endif%}
-        </article>
-        {%endfor%}
-
+        <div class="category-wrapper">
+            <h2>Категории</h2>
+            {% for category in categories%}
+            <article class="category">
+                {% if category.id == active_category%}
+                <a href="{% url 'product_list'%}"><strong>{{category.title}}</strong></a>
+                {% else%}
+                <a href="{% url 'product_list' category=category.id%}">{{category.title}}</a>
+                {% endif%}
+            </article>
+            {%endfor%}
+        </div>
     </section>
 
     <section class="products">
@@ -27,7 +29,7 @@
             <div class="product-img">
                 <img src="{{product.image.url}}">
             </div>
-            <div class="title">{{product.title}}</div>
+            <div class="title"><a href="#">{{product.title}}</a></div>
             <div class="buy-wrapper">
                 <div class="buy">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
