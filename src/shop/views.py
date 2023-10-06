@@ -13,6 +13,7 @@ class ProductList(ListView):
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
+        queryset = super().get_queryset().filter(stock__gte=0)
         if "category" in self.kwargs:
-            return super().get_queryset().filter(category=self.kwargs["category"])
-        return super().get_queryset()
+            return queryset.filter(category=self.kwargs["category"])
+        return queryset
