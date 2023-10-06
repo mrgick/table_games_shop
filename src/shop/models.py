@@ -1,7 +1,12 @@
+from io import BytesIO
+
 from django.contrib.auth.models import User
+from django.core.files import File
+from django.core.files.base import ContentFile
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from PIL import Image
 
 
 class Category(models.Model):
@@ -32,6 +37,25 @@ class Product(models.Model):
     price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, verbose_name="Цена"
     )
+
+    def compress_logo(self, image):
+        im = Image.open(image)
+        im_bytes = BytesIO()
+        im.save(fp=im_bytes, format="WEBP", quality=100)
+        image_content_file = ContentFile(content=im_bytes.getvalue())
+        name = image.name.split(".")[0] + ".WEBP"
+        new_image = File(image_content_file, name=name)
+        return new_image
+
+    def save(self, *args, **kwargs):
+        try:
+            object = Product.objects.filter(id=self.id).first()
+            if object and object.image != self.image:
+                self.image = self.compress_logo(self.image)
+                object.image.delete(save=False)
+        except ValueError:
+            pass
+        super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
