@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class ShopConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "shop"
-    # label = "Магазин"
+    verbose_name = "Магазин"
