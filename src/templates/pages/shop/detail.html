@@ -1,0 +1,25 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/shop/detail.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<h1>{{object.title}}</h1>
+<section class="product-top">
+    <div class="wrapper-img">
+        <img src="{{object.image.url}}">
+    </div>
+    <div class="wrapper-buy">
+        Цена - {{object.price}}
+        В наличии - {{object.stock}}
+        Категория - {{object.category.title}}
+        Купить
+    </div>
+</section>
+<section class="product-top">
+    <p>
+        {{object.description}}
+    </p>
+</section>
+{% endblock %}

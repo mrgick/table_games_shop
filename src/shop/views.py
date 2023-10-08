@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Category, Product
 
@@ -17,3 +17,8 @@ class ProductList(ListView):
         if "category" in self.kwargs:
             return queryset.filter(category=self.kwargs["category"])
         return queryset
+
+
+class ProductDetail(DetailView):
+    template_name = "pages/shop/detail.html"
+    model = Product
