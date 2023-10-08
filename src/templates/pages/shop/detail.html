@@ -11,10 +11,20 @@
         <img src="{{object.image.url}}">
     </div>
     <div class="wrapper-buy">
-        Цена - {{object.price}}
-        В наличии - {{object.stock}}
-        Категория - {{object.category.title}}
-        Купить
+        <div class="buy-price">{{object.price}} ₽</div>
+        <div class="buy-description">
+            <div>
+                В наличии - {{object.stock}} шт.
+            </div>
+            <div>
+                Категория - {{object.category.title}}
+            </div>
+        </div>
+        {% if object.stock > 0 %}
+        <button>Купить</button>
+        {%else%}
+        <div>Нет в начлии</div>
+        {%endif%}
     </div>
 </section>
 <section class="product-top">

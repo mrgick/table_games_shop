@@ -26,10 +26,10 @@
     <section class="products">
         {% for product in object_list %}
         <article class="product">
-            <div class="product-img">
+            <div class="product-img" onclick="location.href='{%url 'product_detail' pk=product.id%}'">
                 <img src="{{product.image.url}}">
             </div>
-            <div class="title"><a href="#">{{product.title}}</a></div>
+            <div class="title"><a href="{%url 'product_detail' pk=product.id%}">{{product.title}}</a></div>
             <div class="buy-wrapper">
                 <div class="buy">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
