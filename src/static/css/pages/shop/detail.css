@@ -30,7 +30,6 @@ main {
     align-items: center;
     justify-content: center;
     padding: 10px;
-    cursor: pointer;
     border: 3px solid #6AB8C6;
     background-color: white;
     border-top-left-radius: 1em;
@@ -48,7 +47,7 @@ main {
     margin-left: auto;
     margin-right: auto;
     width: 350px;
-    height: 300px;
+    height: 330px;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -65,7 +64,49 @@ main {
     margin: 5px auto;
     text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
 }
+
 .buy-description {
     font-size: 18px;
+    line-height: 24px;
+    margin: 20px 0px;
+}
+
+.buy-button {
+    font-size: 40px;
+    border: 2px solid white;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    box-shadow: 0px 10px 10px rgba(255, 255, 255, 0.2), 10px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.buy-button:disabled {
+    font-size: 24px;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.product-bottom {
+    margin: 30px 0;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 30px;
+    border: 3px solid #6AB8C6;
+    background-color: white;
+    border-top-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
+}
+
+.product-bottom>h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2fb3ca;
+}
+
+.product-bottom>p {
+    text-align: justify;
     line-height: 24px;
 }

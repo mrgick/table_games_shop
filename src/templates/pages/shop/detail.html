@@ -21,15 +21,14 @@
             </div>
         </div>
         {% if object.stock > 0 %}
-        <button>Купить</button>
+        <button class="buy-button">Купить</button>
         {%else%}
-        <div>Нет в начлии</div>
+        <button class="buy-button" disabled>Нет в наличии</button>
         {%endif%}
     </div>
 </section>
-<section class="product-top">
-    <p>
-        {{object.description}}
-    </p>
+<section class="product-bottom">
+    <h2>Описание</h2>
+    <p>{{object.description}}</p>
 </section>
 {% endblock %}
