@@ -11,23 +11,34 @@
     <div class="wrapper-img">
         <img src="{{object.image.url}}">
     </div>
-    <div class="wrapper-buy">
-        <div class="buy-price">{{object.price}} ₽</div>
-        <div class="buy-description">
-            <div>
-                В наличии - {{object.stock}} шт.
+    <aside class="product-top-middle">
+        <div class="wrapper-buy">
+            <div class="buy-price">{{object.price}} ₽</div>
+            <div class="buy-description">
+                <div>
+                    В наличии - {{object.stock}} шт.
+                </div>
+                <div>
+                    Категория - {{object.category.title}}
+                </div>
             </div>
-            <div>
-                Категория - {{object.category.title}}
-            </div>
+            {% if object.stock > 0 %}
+            <button id="buy-{{product.id}}" class="{% if product_in_cart %}buy-button-hidden{%endif%} buy-button"
+                onClick="addProductToCart({{product.id}})">Купить</button>
+            <button id="buy-cart-{{product.id}}"
+                class="{% if not product_in_cart %}buy-button-hidden{%endif%} buy-button-cart buy-button"
+                onClick="deleteProductFromCart({{object.id}})">В корзине</button>
+            {%else%}
+            <button class="buy-button" disabled>Нет в наличии</button>
+            {%endif%}
         </div>
-        {% if object.stock > 0 %}
-        <button id="buy-{{product.id}}" class="{% if product_in_cart %}buy-button-hidden{%endif%} buy-button" onClick="addProductToCart({{product.id}})">Купить</button>
-        <button id="buy-cart-{{product.id}}" class="{% if not product_in_cart %}buy-button-hidden{%endif%} buy-button-cart buy-button" onClick="deleteProductFromCart({{object.id}})">В корзине</button>
-        {%else%}
-        <button class="buy-button" disabled>Нет в наличии</button>
-        {%endif%}
-    </div>
+        <div class="wrapper-link">
+            <a href="{%url 'product_list'%}">Назад</a>
+        </div>
+    </aside>
+    <aside class="product-top-right">
+    </aside>
+
 </section>
 <section class="product-bottom">
     <h2>Описание</h2>
