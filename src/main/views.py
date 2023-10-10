@@ -5,6 +5,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
 from news.models import News
+from shop.models import Cart
 
 
 class Home(TemplateView):
@@ -38,7 +39,8 @@ class Registration(FormView):
         user.date_joined = timezone.now()
         user.last_login = timezone.now()
         user.save()
-
+        cart = Cart(client=user)
+        cart.save()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

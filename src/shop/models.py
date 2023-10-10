@@ -73,15 +73,40 @@ class Cart(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Клиент",
     )
-    products = models.ManyToManyField(Product, verbose_name="Товары")
+    count = models.PositiveIntegerField(default=0, verbose_name="Количество товаров")
+    total = models.DecimalField(
+        default=0.00, max_digits=10, decimal_places=2, verbose_name="Общая сумма"
+    )
+
+    def calculate(self):
+        pass
+        # self.c = self.product.price * self.quantity
 
     def __str__(self):
-        return self.client.username
+        return f"Корзина клиента {self.client.username}"
 
     class Meta:
         db_table = "Cart"
         verbose_name = "корзина"
         verbose_name_plural = "корзины"
+
+
+class CartItem(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, null=True, verbose_name="Товар"
+    )
+    cart = models.ForeignKey(
+        Cart, on_delete=models.CASCADE, null=True, verbose_name="Корзина"
+    )
+    quantity = models.PositiveIntegerField(verbose_name="Количество")
+
+    def __str__(self):
+        return f"{self.product.title} ({self.quantity} шт.)"
+
+    class Meta:
+        db_table = "Cart_item"
+        verbose_name = "Элемент корзины"
+        verbose_name_plural = "Элементы корзины"
 
 
 class Order(models.Model):

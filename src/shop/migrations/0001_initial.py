@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         null=True,
                         on_delete=django.db.models.deletion.SET_NULL,
-                        to="Магазин.category",
+                        to="shop.category",
                         verbose_name="Категория",
                     ),
                 ),
@@ -132,7 +132,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "products",
-                    models.ManyToManyField(to="Магазин.product", verbose_name="Товары"),
+                    models.ManyToManyField(to="shop.product", verbose_name="Товары"),
                 ),
             ],
             options={
@@ -164,7 +164,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "products",
-                    models.ManyToManyField(to="Магазин.product", verbose_name="Товары"),
+                    models.ManyToManyField(to="shop.product", verbose_name="Товары"),
                 ),
             ],
             options={

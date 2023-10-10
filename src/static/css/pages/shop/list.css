@@ -170,4 +170,14 @@ h1 {
     gap: 0.2em;
     border-radius: 10px;
     cursor: pointer;
+    height: 50px;
+}
+
+.buy-cart {
+    background: #388997;
+}
+
+.buy-hidden {
+    display: none;
+    visibility: hidden;
 }

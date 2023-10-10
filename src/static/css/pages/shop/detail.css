@@ -80,10 +80,18 @@ main {
     box-shadow: 0px 10px 10px rgba(255, 255, 255, 0.2), 10px 0px 10px rgba(255, 255, 255, 0.2);
 }
 
+.buy-button-cart {
+    background: #388997;
+}
+
 .buy-button:disabled {
     font-size: 24px;
     opacity: 0.6;
     cursor: not-allowed;
+}
+.buy-button-hidden {
+    display: none;
+    visibility: hidden;
 }
 
 .product-bottom {

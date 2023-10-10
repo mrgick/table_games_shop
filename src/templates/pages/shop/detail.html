@@ -2,6 +2,7 @@
 {% load static %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/pages/shop/detail.css' %}" />
+<script src="{% static 'js/pages/shop/detail.js' %}" onload></script>
 {% endblock head %}
 
 {% block content %}
@@ -21,7 +22,8 @@
             </div>
         </div>
         {% if object.stock > 0 %}
-        <button class="buy-button">Купить</button>
+        <button id="buy-{{product.id}}" class="{% if product_in_cart %}buy-button-hidden{%endif%} buy-button" onClick="addProductToCart({{product.id}})">Купить</button>
+        <button id="buy-cart-{{product.id}}" class="{% if not product_in_cart %}buy-button-hidden{%endif%} buy-button-cart buy-button" onClick="deleteProductFromCart({{object.id}})">В корзине</button>
         {%else%}
         <button class="buy-button" disabled>Нет в наличии</button>
         {%endif%}
