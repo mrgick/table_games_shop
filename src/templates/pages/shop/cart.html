@@ -1,0 +1,21 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/shop/cart.css' %}" />
+<script src="{% static 'js/pages/shop/cart.js' %}" onload></script>
+{% endblock head %}
+
+{% block content %}
+
+<h1>Корзина</h1>
+<section>
+{% for item in cart_items%}
+    <article>
+        {{item.product.title}} {{item.product.price}} - {{item.quantity}}
+    </article>
+{% endfor %}
+</section>
+<section>
+{{object.count}}, {{object.total}}
+</section>
+{% endblock %}

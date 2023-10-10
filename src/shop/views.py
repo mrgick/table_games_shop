@@ -73,3 +73,15 @@ class CartUpdate(LoginRequiredMixin, View):
         return JsonResponse(
             {"product_id": cart_item.product.id, "quantity": cart_item.quantity}
         )
+
+
+class CartDetail(LoginRequiredMixin, DetailView):
+    template_name = "pages/shop/cart.html"
+    model = Cart
+
+    def get_object(self, queryset=None):
+        return Cart.objects.get(client=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        kwargs["cart_items"] = CartItem.objects.filter(cart=self.object)
+        return super().get_context_data(**kwargs)

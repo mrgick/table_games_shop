@@ -1,6 +1,7 @@
 from io import BytesIO
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.db import models
@@ -78,9 +79,11 @@ class Cart(models.Model):
         default=0.00, max_digits=10, decimal_places=2, verbose_name="Общая сумма"
     )
 
-    def calculate(self):
-        pass
-        # self.c = self.product.price * self.quantity
+    def save(self, *args, **kwargs):
+        cart_items = CartItem.objects.filter(cart=self.id)
+        self.count = sum(x.quantity for x in cart_items)
+        self.total = sum(x.quantity * x.product.price for x in cart_items)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Корзина клиента {self.client.username}"
@@ -92,16 +95,22 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, null=True, verbose_name="Товар"
-    )
-    cart = models.ForeignKey(
-        Cart, on_delete=models.CASCADE, null=True, verbose_name="Корзина"
-    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар")
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name="Корзина")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
 
+    def clean(self):
+        if not 0 <= self.quantity <= self.product.stock:
+            raise ValidationError(
+                {"quantity": f"Количество должно быть между 0 и {self.product.stock}."}
+            )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.cart.save()
+
     def __str__(self):
-        return f"{self.product.title} ({self.quantity} шт.)"
+        return f"{self.product.title} ({self.quantity} шт.) в корзине {self.cart.client.username}"
 
     class Meta:
         db_table = "Cart_item"
