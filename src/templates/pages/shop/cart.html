@@ -23,14 +23,18 @@
             <tr>
                 <td><a href="{% url 'product_detail' pk=item.product.id %}">{{item.product.title}}</a></td>
                 <td>{{item.product.price}} ₽</td>
-                <td><div class="quantity">
-                <form action="{% url 'cart_update' product_id=item.product.id quantity=item.quantity|add:-1 %}" method="POST">{% csrf_token %}<button>-</button></form>
-                
-                <span>{{item.quantity}}</span>
-                
-                <form action="{% url 'cart_update' product_id=item.product.id quantity=item.quantity|add:1 %}" method="POST">{% csrf_token %}<button>+</button></form>
-                
-                </div></td>
+                <td>
+                    <div class="quantity">
+                        <form action="{% url 'cart_update' product_id=item.product.id quantity=item.quantity|add:-1 %}"
+                            method="POST">{% csrf_token %}<button>-</button></form>
+
+                        <span>{{item.quantity}}</span>
+
+                        <form action="{% url 'cart_update' product_id=item.product.id quantity=item.quantity|add:1 %}"
+                            method="POST">{% csrf_token %}<button>+</button></form>
+
+                    </div>
+                </td>
                 <td>{{item.total}}₽</td>
             </tr>
             {% endfor %}
@@ -43,5 +47,7 @@
         </tbody>
     </table>
 </div>
-<button class="buy-btn">Оформить</button>
+{%if cart_items%}
+<form action="." method="POST">{% csrf_token %}<button class="buy-btn">Оформить</button></form>
+{%endif%}
 {% endblock %}

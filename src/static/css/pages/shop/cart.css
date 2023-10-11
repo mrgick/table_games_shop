@@ -57,6 +57,10 @@ table>tbody>tr:last-child td {
     padding: 5px;
 }
 
+form {
+    margin: 0 auto;
+}
+
 .buy-btn {
     margin: 30px auto;
     background: #268AE0;

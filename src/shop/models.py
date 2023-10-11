@@ -126,7 +126,7 @@ class CartItem(models.Model):
 
 class Order(models.Model):
     class Status(models.IntegerChoices):
-        IN_PROCESSING = 0, _("В обработке")
+        PROCESSING = 0, _("В обработке")
         PENDING = 1, _("Ожидает выдачи")
         COMPLETED = 2, _("Завершён")
 
@@ -137,15 +137,21 @@ class Order(models.Model):
         verbose_name="Клиент",
     )
     status = models.PositiveIntegerField(choices=Status.choices, verbose_name="Статус")
-    price = models.DecimalField(
-        max_digits=10, decimal_places=2, default=0.00, verbose_name="Общая сумма"
+    count = models.PositiveIntegerField(default=0, verbose_name="Количество товаров")
+    total = models.DecimalField(
+        default=0.00, max_digits=10, decimal_places=2, verbose_name="Итоговая стоимость"
     )
-    products = models.ManyToManyField(Product, verbose_name="Товары")
     date = models.DateTimeField(
         default=timezone.now, db_index=True, verbose_name="Дата заказа"
     )
 
     # TODO: Client first_name, last_name, phone ?
+
+    def calculate(self):
+        items = OrderItem.objects.filter(order=self.id)
+        self.count = sum(x.quantity for x in items)
+        self.total = sum(x.total for x in items)
+        self.save()
 
     def __str__(self):
         return f"Заказ #{self.id}"
@@ -155,3 +161,24 @@ class Order(models.Model):
         ordering = ["-date"]
         verbose_name = "заказ"
         verbose_name_plural = "заказы"
+
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL, verbose_name="Товар")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Заказ")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
+    total = models.DecimalField(
+        default=0.00, max_digits=10, decimal_places=2, verbose_name="Общая сумма"
+    )
+
+    def __str__(self):
+        return f"{self.product.title} ({self.quantity} шт.) в заказе #{self.order.id}"
+
+    def calculate(self, *args, **kwargs):
+        self.total = self.quantity * self.product.price
+        self.save()
+
+    class Meta:
+        db_table = "Order_item"
+        verbose_name = "Элемент заказа"
+        verbose_name_plural = "Элементы заказа"

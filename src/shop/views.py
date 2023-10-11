@@ -6,7 +6,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, View
 
-from .models import Cart, CartItem, Category, Product
+from .models import Cart, CartItem, Category, Product, Order, OrderItem
 
 
 class ProductList(ListView):
@@ -90,7 +90,11 @@ class CartDetail(LoginRequiredMixin, DetailView):
     model = Cart
 
     def get_object(self, queryset=None):
-        return Cart.objects.get(client=self.request.user)
+        cart = Cart.objects.filter(client=self.request.user).first()
+        if cart is None:
+            cart = Cart(client=self.request.user)
+            cart.save()
+        return cart
 
     def get_context_data(self, **kwargs):
         kwargs["cart_items"] = CartItem.objects.filter(cart=self.object)
@@ -98,4 +102,18 @@ class CartDetail(LoginRequiredMixin, DetailView):
 
     def post(self, request):
         """Create order"""
-        pass
+        cart = Cart.objects.filter(client=request.user).first()
+        if cart is None or cart.count == 0:
+            return redirect('cart_detail')
+        order = Order(client=request.user, status=0, count=cart.count, total=cart.total)
+        order.save()
+        for cart_item in CartItem.objects.filter(cart=cart):
+            order_item = OrderItem(order=order, product=cart_item.product, quantity=cart_item.quantity, total=cart_item.total)
+            order_item.calculate()
+            order_item.save()
+        order.calculate()
+        order.save()
+        cart.delete()
+        cart = Cart(client=request.user)
+        cart.save()
+        return JsonResponse({1:1})
