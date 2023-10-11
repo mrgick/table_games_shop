@@ -3,6 +3,7 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
 from django.http.response import JsonResponse
+from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, View
 
 from .models import Cart, CartItem, Category, Product
@@ -26,7 +27,7 @@ class ProductList(ListView):
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(stock__gte=0)
+        queryset = super().get_queryset().filter(stock=True)
         if "category" in self.kwargs:
             return queryset.filter(category=self.kwargs["category"])
         return queryset
@@ -48,31 +49,40 @@ class ProductDetail(DetailView):
 
 
 class CartUpdate(LoginRequiredMixin, View):
-    def put(self, request: HttpRequest):
+    def update_cart_item(self, user, product_id, quantity):
         """Update product in cart"""
-        cart = Cart.objects.filter(client=request.user).first()
+        cart = Cart.objects.filter(client=user).first()
         if cart is None:
-            cart = Cart(client=request.user)
+            cart = Cart(client=user)
             cart.save()
-        body = json.loads(request.body)
-        product = Product.objects.get(pk=body["product_id"])
+        product = Product.objects.get(pk=product_id)
         cart_item = CartItem.objects.filter(cart=cart, product=product).first()
         if cart_item is None:
             cart_item = CartItem(
                 cart=cart,
                 product=product,
             )
-        if body["quantity"] <= 0:
-            if cart_item.quantity:
-                cart_item.delete()
-            return JsonResponse({"product_id": product.id, "quantity": 0})
-        if body["quantity"] > product.stock:
-            body["quantity"] = product.stock
-        cart_item.quantity = body["quantity"]
+        if not product.stock or quantity <= 0:
+            cart_item.delete()
+            return cart_item
+        cart_item.quantity = quantity
         cart_item.save()
+        return cart_item
+
+    def put(self, request: HttpRequest):
+        """Update product in cart"""
+        body = json.loads(request.body)
+        cart_item = self.update_cart_item(
+            request.user, body["product_id"], body["quantity"]
+        )
         return JsonResponse(
             {"product_id": cart_item.product.id, "quantity": cart_item.quantity}
         )
+
+    def post(self, request: HttpRequest, product_id, quantity):
+        """Update product in cart (browser)"""
+        self.update_cart_item(request.user, product_id, quantity)
+        return redirect("cart_detail")
 
 
 class CartDetail(LoginRequiredMixin, DetailView):
@@ -85,3 +95,7 @@ class CartDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         kwargs["cart_items"] = CartItem.objects.filter(cart=self.object)
         return super().get_context_data(**kwargs)
+
+    def post(self, request):
+        """Create order"""
+        pass

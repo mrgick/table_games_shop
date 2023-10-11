@@ -16,7 +16,7 @@
             <div class="buy-price">{{object.price}} ₽</div>
             <div class="buy-description">
                 <div>
-                    В наличии - {{object.stock}} шт.
+                    В наличии - {% if object.stock %}Есть{%else%}Нет{%endif%}
                 </div>
                 <div>
                     Категория - {{object.category.title}}

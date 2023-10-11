@@ -34,7 +34,7 @@ class Product(models.Model):
         on_delete=models.SET_NULL,
         verbose_name="Категория",
     )
-    stock = models.PositiveIntegerField(verbose_name="Количество в наличии")
+    stock = models.BooleanField(default=True, verbose_name="В наличии")
     price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, verbose_name="Цена"
     )
@@ -76,13 +76,13 @@ class Cart(models.Model):
     )
     count = models.PositiveIntegerField(default=0, verbose_name="Количество товаров")
     total = models.DecimalField(
-        default=0.00, max_digits=10, decimal_places=2, verbose_name="Общая сумма"
+        default=0.00, max_digits=10, decimal_places=2, verbose_name="Итоговая стоимость"
     )
 
     def save(self, *args, **kwargs):
         cart_items = CartItem.objects.filter(cart=self.id)
         self.count = sum(x.quantity for x in cart_items)
-        self.total = sum(x.quantity * x.product.price for x in cart_items)
+        self.total = sum(x.total for x in cart_items)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -97,16 +97,22 @@ class Cart(models.Model):
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар")
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name="Корзина")
-    quantity = models.PositiveIntegerField(verbose_name="Количество")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
+    total = models.DecimalField(
+        default=0.00, max_digits=10, decimal_places=2, verbose_name="Общая сумма"
+    )
 
     def clean(self):
-        if not 0 <= self.quantity <= self.product.stock:
-            raise ValidationError(
-                {"quantity": f"Количество должно быть между 0 и {self.product.stock}."}
-            )
+        if not self.product.stock:
+            raise ValidationError({"quantity": "Товар должен быть в наличии."})
 
     def save(self, *args, **kwargs):
+        self.total = self.quantity * self.product.price
         super().save(*args, **kwargs)
+        self.cart.save()
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
         self.cart.save()
 
     def __str__(self):
