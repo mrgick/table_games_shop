@@ -127,17 +127,18 @@ body {
 
 /* main */
 main {
-    min-height: calc(100% - 319px);
+    background: #E8F3F5;
+    min-height: calc(100% - 289px);
 }
 
 .wrapper {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
+
 .container {
     max-width: 1280px;
     padding: 20px;

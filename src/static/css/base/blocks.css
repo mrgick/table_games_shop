@@ -10,11 +10,29 @@ h1 {
     margin: 40px auto;
     font-weight: bold;
     color: #2fb3ca;
+    border: 2px solid #6AB8C6;
+    border-top-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+    padding: 20px;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
+    background: white;
 }
+
 
 strong {
     font-size: 20px;
     font-weight: bold;
+}
+
+
+a,
+a:visited {
+    text-decoration: none;
+    color: inherit
+}
+
+button>a {
+    color: white;
 }
 
 button {
@@ -23,11 +41,12 @@ button {
     background-color: #6AB8C6;
     border-radius: 20px;
     cursor: pointer;
+    background: #6AB8C6;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
 }
-button > a, button > a:visited{
-    text-decoration: none;
-    color:white;
-}
+
 
 button:hover {
     cursor: pointer;

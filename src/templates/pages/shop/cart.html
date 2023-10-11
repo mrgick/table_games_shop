@@ -9,13 +9,17 @@
 
 <h1>Корзина</h1>
 <section>
-{% for item in cart_items%}
-    <article>
-        {{item.product.title}} {{item.product.price}} - {{item.quantity}}
-    </article>
-{% endfor %}
+    {% for item in cart_items%}
+    <form id="form-{{item.id}}">
+        <label>{{item.product.title}} ({{item.product.price}}₽ за шт.)</label>
+        <label for="quantity">Кол-во</label>
+        <input id="quantity" name="quantity" type="number" value="{{item.quantity}}" min="1" step="1" max="10">
+        <input type="submit" value="🗸" />
+        <input type="submit" value="x" />
+    </form>
+    {% endfor %}
 </section>
 <section>
-{{object.count}}, {{object.total}}
+    {{object.count}}, {{object.total}}
 </section>
 {% endblock %}

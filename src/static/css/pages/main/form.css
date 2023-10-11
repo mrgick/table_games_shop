@@ -10,28 +10,34 @@
 }
 
 .form-group>label {
-    padding-top: 20px;
+    padding: 10px;
     flex: 50%;
+    display: flex;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    background: #6AB8C6;
+    border-top-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
+    height: 50px;
 }
 
 .form-group>input {
-    border: 1px solid #6AB8C6;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 20px;
-    margin-top: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    flex: 50%;
+    border: 3px solid #6AB8C6;
+    flex: 60%;
+    padding: 10px;
+    border-top-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
 }
 
 .form-group>textarea {
-    margin-left: 20px;
-    margin-top: 20px;
+    flex: 60%;
     padding: 10px;
-    border: 1px solid #6AB8C6;
-    min-width: 500px;
-    max-width: 1024px;
+    border: 3px solid #6AB8C6;
+    border-top-left-radius: 1em;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
 }
 
 .form-group-help {
@@ -77,4 +83,24 @@
     padding: 10px;
     width: 20px;
     margin-left: 38px;
+}
+
+.form-group > a {
+    padding: 12px 28px;
+    color: white;
+    background-color: #6AB8C6;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #6AB8C6;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
+}
+
+
+.form-group > a:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    background-color: #55909b;
+    transform-origin: bottom;
 }
