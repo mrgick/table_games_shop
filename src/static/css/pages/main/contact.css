@@ -26,3 +26,46 @@ table tr>td:last-child {
 table a:hover {
     text-decoration: underline;
 }
+
+table tr:last-child>td {
+    padding: 0;
+}
+
+table tr:last-child>td>iframe {
+    border-top-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+address {
+    word-wrap: break-word;
+}
+
+iframe {
+    width: 500px;
+    height: 500px;
+}
+
+@media only screen and (max-width: 800px) { 
+    table {
+        display: block;
+    }
+    tr {
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+    }
+    td {
+        margin: 10px;
+        max-width: 300px;
+    }
+    tbody {
+        display: flex;
+        flex-direction: column;
+    }
+    iframe {
+        width: 294px;
+    }
+    .container {
+        padding: 0px;
+    }
+}
