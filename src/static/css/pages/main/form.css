@@ -85,7 +85,7 @@
     margin-left: 38px;
 }
 
-.form-group > a {
+.form-group>a {
     padding: 12px 28px;
     color: white;
     background-color: #6AB8C6;
@@ -98,9 +98,29 @@
 }
 
 
-.form-group > a:hover {
+.form-group>a:hover {
     cursor: pointer;
     transform: scale(1.02);
     background-color: #55909b;
     transform-origin: bottom;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 100%;
+    }
+    .form {
+        margin: 0;
+        width: 100%;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap:1em;
+    }
+
+    .form-group>label {
+        padding: 15px;
+        flex: 100%;
+    }
 }

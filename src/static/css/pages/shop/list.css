@@ -99,6 +99,16 @@ h1 {
     }
 }
 
+@media only screen and (max-width: 800px) {
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .shop {
+        flex-direction: column;
+    }
+}
+
 .product {
     width: 350px;
     height: 420px;
