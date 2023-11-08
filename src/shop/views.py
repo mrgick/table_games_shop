@@ -1,6 +1,8 @@
 import json
+from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
@@ -116,4 +118,9 @@ class CartDetail(LoginRequiredMixin, DetailView):
         cart.delete()
         cart = Cart(client=request.user)
         cart.save()
-        return JsonResponse({1:1})
+        return redirect('orders_list')
+
+
+class OrdersList(LoginRequiredMixin, ListView):
+    template_name = "pages/shop/orders.html"
+    model = Order

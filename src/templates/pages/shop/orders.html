@@ -1,0 +1,25 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/shop/orders.css' %}" />
+<script src="{% static 'js/pages/shop/orders.js' %}" onload></script>
+{% endblock head %}
+
+{% block content %}
+<h1>Заказы</h1>
+<section>
+    {% for order in object_list %}
+    <article>
+        <p><strong>Заказ #{{order.id}}</strong> от {{order.date|date:'Y-m-d'}}
+        <div>Стаус: {{order.get_status_display}}</div>
+        </p>
+        <p>{{order.price}}</p>
+        {%for item in order.items.all%}
+        <article>
+            {{item}}
+        </article>
+        {%endfor%}
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

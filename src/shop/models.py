@@ -78,6 +78,9 @@ class Cart(models.Model):
     total = models.DecimalField(
         default=0.00, max_digits=10, decimal_places=2, verbose_name="Итоговая стоимость"
     )
+    items = models.ManyToManyField(
+        Product, through="CartItem", through_fields=("cart", "product")
+    )
 
     def save(self, *args, **kwargs):
         cart_items = CartItem.objects.filter(cart=self.id)
@@ -144,6 +147,9 @@ class Order(models.Model):
     date = models.DateTimeField(
         default=timezone.now, db_index=True, verbose_name="Дата заказа"
     )
+    items = models.ManyToManyField(
+        Product, through="OrderItem", through_fields=("order", "product")
+    )
 
     # TODO: Client first_name, last_name, phone ?
 
@@ -164,7 +170,9 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL, verbose_name="Товар")
+    product = models.ForeignKey(
+        Product, null=True, on_delete=models.SET_NULL, verbose_name="Товар"
+    )
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Заказ")
     quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
     total = models.DecimalField(
