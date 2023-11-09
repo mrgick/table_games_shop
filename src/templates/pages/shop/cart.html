@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>Товар</th>
-                <th>Цена за штуку</th>
+                <th class="cost">Цена за штуку</th>
                 <th>Количество</th>
                 <th>Стоимость</th>
             </tr>
@@ -22,7 +22,7 @@
             {% for item in cart_items%}
             <tr>
                 <td><a href="{% url 'product_detail' pk=item.product.id %}">{{item.product.title}}</a></td>
-                <td>{{item.product.price}} ₽</td>
+                <td class="cost">{{item.product.price}} ₽</td>
                 <td>
                     <div class="quantity">
                         <form action="{% url 'cart_update' product_id=item.product.id quantity=item.quantity|add:-1 %}"
@@ -40,7 +40,7 @@
             {% endfor %}
             <tr>
                 <td>Итого</td>
-                <td></td>
+                <td class="cost"></td>
                 <td>{{object.count}} шт</td>
                 <td>{{object.total}} ₽</td>
             </tr>
