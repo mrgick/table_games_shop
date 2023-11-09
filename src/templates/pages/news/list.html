@@ -7,11 +7,6 @@
 {% block content %}
 
 <h1>Новости</h1>
-{% if user.is_staff%}
-<div class="news-btn">
-    <button><a href="{% url 'news_create' %}">Создать новость</a></button>
-</div>
-{% endif %}
 
 {% for news in object_list %}
 <article class="news" onclick="location.href='{{news.id}}/';">
