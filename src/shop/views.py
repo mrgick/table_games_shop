@@ -124,3 +124,6 @@ class CartDetail(LoginRequiredMixin, DetailView):
 class OrdersList(LoginRequiredMixin, ListView):
     template_name = "pages/shop/orders.html"
     model = Order
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user).prefetch_related('items__orderitem_set').all()

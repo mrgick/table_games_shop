@@ -6,20 +6,48 @@
 {% endblock head %}
 
 {% block content %}
-<h1>Заказы</h1>
+<h1>Мои заказы</h1>
+{% if object_list %}
+{% for order in object_list %}
 <section>
-    {% for order in object_list %}
-    <article>
-        <p><strong>Заказ #{{order.id}}</strong> от {{order.date|date:'Y-m-d'}}
-        <div>Стаус: {{order.get_status_display}}</div>
-        </p>
-        <p>{{order.price}}</p>
-        {%for item in order.items.all%}
-        <article>
-            {{item}}
-        </article>
-        {%endfor%}
-    </article>
-    {% endfor %}
+    <input type="checkbox" class="card-checkbox" id="card-{{order.id}}" />
+    <label for="card-{{order.id}}" class="card">
+        <p><strong>Заказ #{{order.id}}</strong> от {{order.date|date:'Y-m-d'}}</p>
+        <div class="status">{{order.get_status_display}}</div>
+        <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
+            <path fill="#6AB8C6" d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
+        </svg>
+    </label>
+    <div class="items">
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.orderitem_set.all%}
+                <tr>
+                    <td><a href="{% url 'product_detail' pk=item.product.id %}">{{item.product.title}}</a></td>
+                    <td>{{item.quantity}} шт.</td>
+                    <td>{{item.total}} ₽</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td>Итого</td>
+                    <td>{{order.count}} шт</td>
+                    <td>{{order.total}} ₽</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endfor %}
+<section>
+    {% else %}
+    Список заказов пуст.
+    {% endif %}
 </section>
 {% endblock %}

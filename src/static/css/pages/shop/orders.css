@@ -1,0 +1,82 @@
+.container {
+    /* width: 1280px; */
+}
+
+section {
+    width: 800px;
+    margin: 20px 0;
+    box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
+    border-radius: 1em;
+}
+
+.card {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border: 4px solid #6AB8C6;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    transition: 0.15s;
+    background-color: rgb(248, 248, 248);
+}
+
+.status {
+    margin-left: auto;
+    margin-right: 0px;
+    padding: 10px;
+    background-color: #6AB8C6;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #6AB8C6;
+}
+
+.price {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    gap: 2em;
+}
+
+.items {
+    display: none;
+    background-color: white;
+    padding: 20px;
+    border: 4px solid #6AB8C6;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 0px;
+    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+
+.card-checkbox {
+    display: none;
+}
+
+.card-checkbox:checked~.items {
+    display: flex;
+}
+
+.card-checkbox:checked~.card {
+    display: flex;
+    margin-bottom: 0px;
+}
+
+.card-checkbox:checked~.card svg {
+    transform: rotate(180deg);
+}
+
+table {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 20px;
+    border-collapse: separate;
+}
+
+th,
+td {
+    text-align: left;
+}
