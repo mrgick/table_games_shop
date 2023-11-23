@@ -21,7 +21,7 @@ class News(models.Model):
     author = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Автор"
     )
-    image = models.ImageField(null=True, blank=True, verbose_name="Изображение")
+    image = models.ImageField(verbose_name="Изображение")
 
     def get_absolute_url(self):
         """Метод возвращает строку с URL-адресом записи."""
