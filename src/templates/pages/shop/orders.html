@@ -6,7 +6,7 @@
 {% endblock head %}
 
 {% block content %}
-<h1>Мои заказы</h1>
+<h1>{% if request.user.is_staff %} Заказы {% else %} Мои заказы {% endif %}</h1>
 {% if object_list %}
 {% for order in object_list %}
 <section>
@@ -42,6 +42,12 @@
                 </tr>
             </tbody>
         </table>
+        {% if request.user.is_staff %}
+        <div class="card-activity">
+            <p>Заказ пользователя {{order.client}}</p>
+            <button><a href="{% url 'order_edit' pk=order.id%}">Редактировать</a></button>
+        </div>
+        {% endif %}
     </div>
 </section>
 {% endfor %}

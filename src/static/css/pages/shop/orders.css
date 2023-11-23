@@ -19,7 +19,7 @@ section {
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
     transition: 0.15s;
-    background-color: rgb(248, 248, 248);
+    background-color: white;
 }
 
 .status {
@@ -49,6 +49,9 @@ section {
     border-top: 0px;
     border-bottom-right-radius: 1em;
     border-bottom-left-radius: 1em;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }
 
 .card-checkbox {
@@ -72,11 +75,82 @@ table {
     width: 600px;
     margin-left: auto;
     margin-right: auto;
-    border-spacing: 20px;
+    border-spacing: 0px;
     border-collapse: separate;
+}
+
+tr:last-child>td {
+    border-top: 2px solid #6AB8C6;
 }
 
 th,
 td {
+    padding: 15px;
     text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+.card-activity {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+@media only screen and (max-width: 830px) {
+    .container {
+        width: 100%;
+    }
+    section {
+        width: 100%;
+    }
+    table {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    table,
+    thead,
+    tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+
+    tr {
+        display: grid;
+        grid-template-areas:
+            'title title'
+            'amount price';
+        text-align: center;
+    }
+
+    tr>th:nth-child(1),
+    tr>td:nth-child(1) {
+        grid-area: title;
+    }
+
+    tr>th:nth-child(2),
+    tr>td:nth-child(2) {
+        grid-area: amount;
+        border-top: 0px;
+    }
+
+    tr>th:nth-child(3),
+    tr>td:nth-child(3) {
+        grid-area: price;
+        border-top: 0px;
+    }
+
+
 }

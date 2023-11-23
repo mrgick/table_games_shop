@@ -2,6 +2,8 @@ import json
 from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic.edit import FormView
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import JsonResponse
@@ -126,4 +128,12 @@ class OrdersList(LoginRequiredMixin, ListView):
     model = Order
 
     def get_queryset(self):
-        return Order.objects.filter(client=self.request.user).prefetch_related('items__orderitem_set').all()
+        if self.request.user.is_staff:
+            return Order.objects.order_by("-date").prefetch_related('items__orderitem_set').all()
+        return Order.objects.order_by("-date").filter(client=self.request.user).prefetch_related('items__orderitem_set').all()
+
+
+class OrderEdit(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    template_name = "pages/shop/order_edit.html"
+    model = Order
+    permission_required = ["order.change_order", "order.delete_order"]

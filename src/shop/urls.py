@@ -13,5 +13,6 @@ urlpatterns = [
         views.CartUpdate.as_view(),
         name="cart_update",
     ),
-    path("orders/", views.OrdersList.as_view(), name="orders_list")
+    path("orders/", views.OrdersList.as_view(), name="orders_list"),
+    path("order-edit/<int:pk>/", views.OrderEdit.as_view(), name="order_edit")
 ]
