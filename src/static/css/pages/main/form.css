@@ -23,13 +23,14 @@
     height: 50px;
 }
 
-.form-group>input {
+.form-group>input, .form-group>select {
     border: 3px solid #6AB8C6;
     flex: 60%;
     padding: 10px;
     border-top-left-radius: 1em;
     border-bottom-right-radius: 1em;
     box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
+    background-color: white;
 }
 
 .form-group>textarea {

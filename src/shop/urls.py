@@ -14,5 +14,6 @@ urlpatterns = [
         name="cart_update",
     ),
     path("orders/", views.OrdersList.as_view(), name="orders_list"),
-    path("order-edit/<int:pk>/", views.OrderEdit.as_view(), name="order_edit")
+    path("order-delete/<int:pk>/", views.OrderDelete.as_view(), name="order_delete"),
+    path("order-edit/<int:pk>/", views.OrderChangeStatus.as_view(), name="order_edit"),
 ]

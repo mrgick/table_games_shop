@@ -46,6 +46,7 @@
         <div class="card-activity">
             <p>Заказ пользователя {{order.client}}</p>
             <button><a href="{% url 'order_edit' pk=order.id%}">Редактировать</a></button>
+            <button style="background-color: brown;"><a href="{% url 'order_delete' pk=order.id%}">Удалить</a></button>
         </div>
         {% endif %}
     </div>

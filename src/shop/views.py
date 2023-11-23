@@ -3,7 +3,8 @@ from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views.generic.edit import FormView
+from django.db import models
+from django.views.generic.edit import FormView, DeleteView, UpdateView
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import JsonResponse
@@ -133,7 +134,43 @@ class OrdersList(LoginRequiredMixin, ListView):
         return Order.objects.order_by("-date").filter(client=self.request.user).prefetch_related('items__orderitem_set').all()
 
 
-class OrderEdit(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    template_name = "pages/shop/order_edit.html"
-    model = Order
-    permission_required = ["order.change_order", "order.delete_order"]
+class OrderDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    template_name = "pages/main/form.html"
+    permission_required = ["order.delete_order"]
+    order = Order
+
+    success_url = "/shop/orders/"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Order.objects.filter(pk=self.kwargs["pk"])
+    
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = f"Удаление заказа #{self.object.id}"
+        kwargs["action"] = "."
+        kwargs["button"] = "Удалить"
+        kwargs["link"] = {
+            "name": "Назад к заказам",
+            "value": "/shop/orders/",
+        }
+        return super().get_context_data(**kwargs)
+
+
+class OrderChangeStatus(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    template_name = "pages/main/form.html"
+    permission_required = ["order.change_order"]
+    order = Order
+    fields = ["status"]
+    success_url = "/shop/orders/"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Order.objects.filter(pk=self.kwargs["pk"])
+    
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = f"Изменение заказа #{self.object.id}"
+        kwargs["action"] = "."
+        kwargs["button"] = "Сохранить"
+        kwargs["link"] = {
+            "name": "Назад к заказам",
+            "value": "/shop/orders/",
+        }
+        return super().get_context_data(**kwargs)
