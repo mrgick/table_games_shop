@@ -136,7 +136,7 @@ class OrdersList(LoginRequiredMixin, ListView):
 
 class OrderDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "pages/main/form.html"
-    permission_required = ["order.delete_order"]
+    permission_required = "orders.delete_order"
     order = Order
 
     success_url = "/shop/orders/"
@@ -157,7 +157,7 @@ class OrderDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 
 class OrderChangeStatus(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = "pages/main/form.html"
-    permission_required = ["order.change_order"]
+    permission_required = "orders.change_order"
     order = Order
     fields = ["status"]
     success_url = "/shop/orders/"
