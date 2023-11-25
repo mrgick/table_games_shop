@@ -1,3 +1,8 @@
+.container {
+    width: 800px;
+}
+
+
 .form {
     margin: 20px 10px;
 }
@@ -11,7 +16,7 @@
 
 .form-group>label {
     padding: 10px;
-    flex: 50%;
+    flex: 1;
     display: flex;
     align-items: center;
     color: white;
@@ -25,7 +30,7 @@
 
 .form-group>input, .form-group>select {
     border: 3px solid #6AB8C6;
-    flex: 60%;
+    flex: 1;
     padding: 10px;
     border-top-left-radius: 1em;
     border-bottom-right-radius: 1em;
@@ -34,15 +39,30 @@
 }
 
 .form-group>textarea {
-    flex: 60%;
     padding: 10px;
     border: 3px solid #6AB8C6;
     border-top-left-radius: 1em;
     box-shadow: 0px 10px 10px rgba(39, 105, 204, 0.2), 10px 0px 10px rgba(39, 105, 204, 0.2);
 }
 
+.form-group:has(#id_image) > label, .form-group:has(textarea) > label {
+    margin-top: 0px;
+    line-height: 30px;
+    flex: 100%
+}
+
+.form-group:has(#id_image), .form-group:has(textarea) {
+    flex-direction: column;
+    gap:2em;
+}
+
+.form-group > a {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
 .form-group-help {
-    flex: 50%;
+    flex: 1;
     font-size: 16px;
     color: blue;
     margin-bottom: 10px;
@@ -52,7 +72,7 @@
 .form-group-error {
     color: red;
     font-size: 16px;
-    flex: 50%;
+    flex: 1;
     margin-bottom: 10px;
     font-weight: bold;
 }
@@ -106,7 +126,7 @@
     transform-origin: bottom;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .container {
         width: 100%;
     }
@@ -123,5 +143,8 @@
     .form-group>label {
         padding: 15px;
         flex: 100%;
+    }
+    h1 {
+        word-break: break-all;
     }
 }

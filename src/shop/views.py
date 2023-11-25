@@ -133,6 +133,10 @@ class OrdersList(LoginRequiredMixin, ListView):
             return Order.objects.order_by("-date").prefetch_related('items__orderitem_set').all()
         return Order.objects.order_by("-date").filter(client=self.request.user).prefetch_related('items__orderitem_set').all()
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        if self.request.user.is_superuser:
+            kwargs['active_url'] = "Заказы"
+        return super().get_context_data(**kwargs)
 
 class OrderDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "pages/main/form.html"

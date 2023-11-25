@@ -1,0 +1,58 @@
+{% extends "pages/main/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pages/main/admin_panel.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<h1>
+    {% if request.user.is_staff %}
+    <div class="nav-panel">
+        <a href="{%url 'orders_list' %}" class="{% if active_url == 'Заказы' %} nav-panel-choosed{%endif%}">Заказы</a>
+        {% if request.user.is_superuser %}
+        <a href="{%url 'admin_news'%}" class="{% if active_url == 'Новости' %} nav-panel-choosed{%endif%}">Новости</a>
+        <a class="{% if active_url == 'Категории' %} nav-panel-choosed{%endif%}">Категории</a>
+        <a class="{% if active_url == 'Товары' %} nav-panel-choosed{%endif%}">Товары</a>
+        {% endif %}
+    </div>
+    {% else %}
+    Мои заказы
+    {% endif %}
+</h1>
+
+<div class="btn-create">
+    <button><a href="{%url url_create%}">Создать</a></button>
+</div>
+
+{% if object_list %}
+<section>
+    {% for object in object_list %}
+    <article class="card">
+        <div class="description">
+            <p><a href="{%url url_id pk=object.id%}"><strong>#{{object.id}} {{object.title}}</strong></a>
+                {% if object.date %}
+                от {{object.date|date:'Y-m-d'}}
+                {%endif %}
+            </p>
+        </div>
+        <div class="activity">
+            <a href="{%url url_edit pk=object.id%}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40">
+                    <path fill="#6AB8C6"
+                        d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                </svg>
+            </a>
+            <a href="{%url url_delete pk=object.id%}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40">
+                    <path fill="brown"
+                        d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                </svg>
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+    {% else %}
+    Список пуст.
+    {% endif %}
+</section>
+{% endblock %}

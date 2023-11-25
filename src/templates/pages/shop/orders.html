@@ -6,7 +6,21 @@
 {% endblock head %}
 
 {% block content %}
-<h1>{% if request.user.is_staff %} Заказы {% else %} Мои заказы {% endif %}</h1>
+<h1>
+    {% if request.user.is_staff %}
+    <div class="nav-panel">
+        <a href="{%url 'orders_list' %}" class="{% if active_url == 'Заказы' %} nav-panel-choosed{%endif%}">Заказы</a>
+        {% if request.user.is_superuser %}
+        <a href="{%url 'admin_news'%}" class="{% if active_url == 'Новости' %} nav-panel-choosed{%endif%}">Новости</a>
+        <a class="{% if active_url == 'Новости' %} nav-panel-choosed{%endif%}">Категории</a>
+        <a class="{% if active_url == 'Новости' %} nav-panel-choosed{%endif%}">Товары</a>
+        {% endif %}
+    </div>
+    {% else %}
+    Мои заказы
+    {% endif %}
+</h1>
+
 {% if object_list %}
 {% for order in object_list %}
 <section>
