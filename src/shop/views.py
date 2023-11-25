@@ -252,3 +252,77 @@ class CategoriesAdminList(PermissionRequiredMixin, ListView):
             "url_create": "category_create"
         })
         return super().get_context_data(**kwargs)
+
+
+class ProductCreate(PermissionRequiredMixin, CreateView):
+    template_name = "pages/main/form.html"
+    success_url = "/shop/admin-products/"
+    fields = "__all__"
+    model = Product
+    permission_required = "product.add_product"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Создание товара"
+        kwargs["action"] = "."
+        kwargs["button"] = "Создать"
+        kwargs["link"] = {
+            "name": "Назад в панель",
+            "value": reverse("admin_products"),
+        }
+        return super().get_context_data(**kwargs)
+
+
+class ProductUpdate(PermissionRequiredMixin, UpdateView):
+    template_name = "pages/main/form.html"
+    model = Product
+    fields = "__all__"
+    success_url = "/shop/admin-products/"
+    permission_required = "product.change_product"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Редактирование товара"
+        kwargs["action"] = "."
+        kwargs["button"] = "Сохранить"
+        kwargs["link"] = {
+            "name": "Назад в панель",
+            "value": reverse("admin_products"),
+        }
+        return super().get_context_data(**kwargs)
+
+
+class ProductDelete(PermissionRequiredMixin, DeleteView):
+    template_name = "pages/main/form.html"
+    model = Product
+    success_url = "/shop/admin-products/"
+    permission_required = "product.delete_product"
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            {
+                "title": f'Удаление товара #{self.object.id} {self.object}',
+                "action": ".",
+                "button": "Удалить",
+                "link": {
+                    "name": "Назад в панель",
+                    "value": reverse("admin_products"),
+                },
+            }
+        )
+        return super().get_context_data(**kwargs)
+
+
+class ProducsAdminList(PermissionRequiredMixin, ListView):
+    template_name = "pages/main/admin_panel.html"
+    model = Product
+    permission_required = ["product.view_product"]
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        kwargs.update({
+            "active_url":"Товары",
+            "url_id": "product_detail",
+            "url_edit":"product_update",
+            "url_delete":"product_delete",
+            "url_create": "product_create"
+        })
+        return super().get_context_data(**kwargs)

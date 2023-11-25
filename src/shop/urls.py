@@ -20,4 +20,8 @@ urlpatterns = [
     path("category/create/", views.CategoryCreate.as_view(), name="category_create"),
     path("category/update/<int:pk>/", views.CategoryUpdate.as_view(), name="category_update"),
     path("category/delete/<int:pk>/", views.CategoryDelete.as_view(), name="category_delete"),
+    path("admin-products/", views.ProducsAdminList.as_view(), name="admin_products"),
+    path("product/create/", views.ProductCreate.as_view(), name="product_create"),
+    path("product/update/<int:pk>/", views.ProductUpdate.as_view(), name="product_update"),
+    path("product/delete/<int:pk>/", views.ProductDelete.as_view(), name="product_delete"),
 ]

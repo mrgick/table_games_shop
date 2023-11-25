@@ -8,6 +8,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from PIL import Image
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 
 
 class Category(models.Model):
@@ -36,7 +38,8 @@ class Product(models.Model):
     )
     stock = models.BooleanField(default=True, verbose_name="В наличии")
     price = models.DecimalField(
-        max_digits=10, decimal_places=2, default=0.00, verbose_name="Цена"
+        max_digits=10, decimal_places=2, default=0.00, verbose_name="Цена",
+        validators=[MinValueValidator(Decimal('0.01'))]
     )
 
     def compress_logo(self, image):

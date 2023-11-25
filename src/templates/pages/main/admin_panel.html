@@ -13,7 +13,7 @@
         <a href="{%url 'admin_news'%}" class="{% if active_url == 'Новости' %} nav-panel-choosed{%endif%}">Новости</a>
         <a href="{%url 'admin_categories'%}"
             class="{% if active_url == 'Категории' %} nav-panel-choosed{%endif%}">Категории</a>
-        <a class="{% if active_url == 'Товары' %} nav-panel-choosed{%endif%}">Товары</a>
+        <a href="{%url 'admin_products'%}" class="{% if active_url == 'Товары' %} nav-panel-choosed{%endif%}">Товары</a>
         {% endif %}
     </div>
     {% else %}
