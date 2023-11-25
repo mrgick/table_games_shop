@@ -177,7 +177,7 @@ class OrderChangeStatus(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     template_name = "pages/main/form.html"
     permission_required = "orders.change_order"
     order = Order
-    fields = ["status"]
+    fields = ["status", "client"]
     success_url = "/shop/orders/"
 
     def get_queryset(self) -> QuerySet[Any]:

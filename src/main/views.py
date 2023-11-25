@@ -1,4 +1,3 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic.base import TemplateView
@@ -6,6 +5,8 @@ from django.views.generic.edit import FormView
 
 from news.models import News
 from shop.models import Cart
+
+from .forms import RegistrationForm
 
 
 class Home(TemplateView):
@@ -28,7 +29,7 @@ class Registration(FormView):
     """Class for the registration."""
 
     template_name = "pages/main/form.html"
-    form_class = UserCreationForm
+    form_class = RegistrationForm
     success_url = "/"
 
     def form_valid(self, form):

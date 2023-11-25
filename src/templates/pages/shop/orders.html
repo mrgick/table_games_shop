@@ -58,7 +58,7 @@
         </table>
         {% if request.user.is_staff %}
         <div class="card-activity">
-            <p>Заказ пользователя {{order.client}}</p>
+            <p>Заказ пользователя {{order.client}} ({{order.client.last_name}} {{order.client.first_name}}, {{order.client.email}})</p>
             <button><a href="{% url 'order_edit' pk=order.id%}">Редактировать</a></button>
             <button style="background-color: brown;"><a href="{% url 'order_delete' pk=order.id%}">Удалить</a></button>
         </div>

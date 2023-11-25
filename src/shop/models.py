@@ -157,8 +157,6 @@ class Order(models.Model):
         Product, through="OrderItem", through_fields=("order", "product")
     )
 
-    # TODO: Client first_name, last_name, phone ?
-
     def calculate(self):
         items = OrderItem.objects.filter(order=self.id)
         self.count = sum(x.quantity for x in items)
