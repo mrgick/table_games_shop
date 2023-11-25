@@ -4,12 +4,13 @@ from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db import models
-from django.views.generic.edit import FormView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, View
+from django.urls import reverse
 
 from .models import Cart, CartItem, Category, Product, Order, OrderItem
 
@@ -177,4 +178,77 @@ class OrderChangeStatus(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
             "name": "Назад к заказам",
             "value": "/shop/orders/",
         }
+        return super().get_context_data(**kwargs)
+
+class CategoryCreate(PermissionRequiredMixin, CreateView):
+    template_name = "pages/main/form.html"
+    success_url = "/shop/admin-categories/"
+    fields = "__all__"
+    model = Category
+    permission_required = "category.add_category"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Создание категории"
+        kwargs["action"] = "."
+        kwargs["button"] = "Создать"
+        kwargs["link"] = {
+            "name": "Назад в панель",
+            "value": reverse("admin_categories"),
+        }
+        return super().get_context_data(**kwargs)
+
+
+class CategoryUpdate(PermissionRequiredMixin, UpdateView):
+    template_name = "pages/main/form.html"
+    model = Category
+    fields = "__all__"
+    success_url = "/shop/admin-categories/"
+    permission_required = "category.change_category"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Редактирование категории"
+        kwargs["action"] = "."
+        kwargs["button"] = "Сохранить"
+        kwargs["link"] = {
+            "name": "Назад в панель",
+            "value": reverse("admin_categories"),
+        }
+        return super().get_context_data(**kwargs)
+
+
+class CategoryDelete(PermissionRequiredMixin, DeleteView):
+    template_name = "pages/main/form.html"
+    model = Category
+    success_url = "/shop/admin-categories/"
+    permission_required = "category.delete_category"
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            {
+                "title": f'Удаление категории #{self.object.id} {self.object}',
+                "action": ".",
+                "button": "Удалить",
+                "link": {
+                    "name": "Назад в панель",
+                    "value": reverse("admin_categories"),
+                },
+            }
+        )
+        return super().get_context_data(**kwargs)
+
+
+class CategoriesAdminList(PermissionRequiredMixin, ListView):
+    template_name = "pages/main/admin_panel.html"
+    model = Category
+    permission_required = ["category.view_category"]
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        kwargs.update({
+            "active_url":"Категории",
+            "url_id": "product_list",
+            "url_edit":"category_update",
+            "url_delete":"category_delete",
+            "url_create": "category_create"
+        })
         return super().get_context_data(**kwargs)

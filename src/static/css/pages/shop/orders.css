@@ -102,7 +102,9 @@ th {
 .nav-panel a {
     cursor: pointer;
 }
-.nav-panel-choosed {
+
+
+.nav-panel a:hover, .nav-panel-choosed {
     text-decoration: underline;
 }
 

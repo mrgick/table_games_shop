@@ -29,7 +29,7 @@ h1 {
 .categories {
     padding: 10px;
     width: 350px;
-    height: 420px;
+    min-height: 420px;
 }
 
 .category-wrapper {
@@ -39,7 +39,7 @@ h1 {
     gap: 1em;
     padding: 10px;
     width: 350px;
-    height: 420px;
+    min-height: 420px;
     background-color: #6AB8C6;
     border-top-left-radius: 1em;
     border-bottom-right-radius: 1em;

@@ -16,4 +16,8 @@ urlpatterns = [
     path("orders/", views.OrdersList.as_view(), name="orders_list"),
     path("order-delete/<int:pk>/", views.OrderDelete.as_view(), name="order_delete"),
     path("order-edit/<int:pk>/", views.OrderChangeStatus.as_view(), name="order_edit"),
+    path("admin-categories/", views.CategoriesAdminList.as_view(), name="admin_categories"),
+    path("category/create/", views.CategoryCreate.as_view(), name="category_create"),
+    path("category/update/<int:pk>/", views.CategoryUpdate.as_view(), name="category_update"),
+    path("category/delete/<int:pk>/", views.CategoryDelete.as_view(), name="category_delete"),
 ]
