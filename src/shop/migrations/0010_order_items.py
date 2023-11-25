@@ -12,6 +12,10 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="order",
             name="items",
-            field=models.ManyToManyField(through="shop.OrderItem", to="shop.product", through_fields=("order", "product")),
+            field=models.ManyToManyField(
+                through="shop.OrderItem",
+                to="shop.product",
+                through_fields=("order", "product"),
+            ),
         ),
     ]

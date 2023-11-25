@@ -1,6 +1,6 @@
 from typing import Any
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import (
     CreateView,
@@ -75,7 +75,7 @@ class NewsDelete(PermissionRequiredMixin, DeleteView):
         kwargs = super().get_context_data(**kwargs)
         kwargs.update(
             {
-                "title": f'Удаление новости #{self.object.id} {self.object}',
+                "title": f"Удаление новости #{self.object.id} {self.object}",
                 "action": ".",
                 "button": "Удалить",
                 "link": {
@@ -93,11 +93,13 @@ class NewsAdminList(PermissionRequiredMixin, ListView):
     permission_required = ["news.view_news"]
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs.update({
-            "active_url":"Новости",
-            "url_id": "news_detail",
-            "url_edit":"news_edit",
-            "url_delete":"news_delete",
-            "url_create": "news_create"
-        })
+        kwargs.update(
+            {
+                "active_url": "Новости",
+                "url_id": "news_detail",
+                "url_edit": "news_edit",
+                "url_delete": "news_delete",
+                "url_create": "news_create",
+            }
+        )
         return super().get_context_data(**kwargs)

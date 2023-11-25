@@ -1,18 +1,16 @@
 import json
 from typing import Any
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db import models
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
-from django.views.generic import DetailView, ListView, View
 from django.urls import reverse
+from django.views.generic import DetailView, ListView, View
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .models import Cart, CartItem, Category, Product, Order, OrderItem
+from .models import Cart, CartItem, Category, Order, OrderItem, Product
 
 
 class ProductList(ListView):
@@ -110,11 +108,16 @@ class CartDetail(LoginRequiredMixin, DetailView):
         """Create order"""
         cart = Cart.objects.filter(client=request.user).first()
         if cart is None or cart.count == 0:
-            return redirect('cart_detail')
+            return redirect("cart_detail")
         order = Order(client=request.user, status=0, count=cart.count, total=cart.total)
         order.save()
         for cart_item in CartItem.objects.filter(cart=cart):
-            order_item = OrderItem(order=order, product=cart_item.product, quantity=cart_item.quantity, total=cart_item.total)
+            order_item = OrderItem(
+                order=order,
+                product=cart_item.product,
+                quantity=cart_item.quantity,
+                total=cart_item.total,
+            )
             order_item.calculate()
             order_item.save()
         order.calculate()
@@ -122,7 +125,7 @@ class CartDetail(LoginRequiredMixin, DetailView):
         cart.delete()
         cart = Cart(client=request.user)
         cart.save()
-        return redirect('orders_list')
+        return redirect("orders_list")
 
 
 class OrdersList(LoginRequiredMixin, ListView):
@@ -131,13 +134,23 @@ class OrdersList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return Order.objects.order_by("-date").prefetch_related('items__orderitem_set').all()
-        return Order.objects.order_by("-date").filter(client=self.request.user).prefetch_related('items__orderitem_set').all()
+            return (
+                Order.objects.order_by("-date")
+                .prefetch_related("items__orderitem_set")
+                .all()
+            )
+        return (
+            Order.objects.order_by("-date")
+            .filter(client=self.request.user)
+            .prefetch_related("items__orderitem_set")
+            .all()
+        )
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         if self.request.user.is_superuser:
-            kwargs['active_url'] = "Заказы"
+            kwargs["active_url"] = "Заказы"
         return super().get_context_data(**kwargs)
+
 
 class OrderDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "pages/main/form.html"
@@ -148,7 +161,7 @@ class OrderDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return Order.objects.filter(pk=self.kwargs["pk"])
-    
+
     def get_context_data(self, **kwargs):
         kwargs["title"] = f"Удаление заказа #{self.object.id}"
         kwargs["action"] = "."
@@ -169,7 +182,7 @@ class OrderChangeStatus(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 
     def get_queryset(self) -> QuerySet[Any]:
         return Order.objects.filter(pk=self.kwargs["pk"])
-    
+
     def get_context_data(self, **kwargs):
         kwargs["title"] = f"Изменение заказа #{self.object.id}"
         kwargs["action"] = "."
@@ -179,6 +192,7 @@ class OrderChangeStatus(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
             "value": "/shop/orders/",
         }
         return super().get_context_data(**kwargs)
+
 
 class CategoryCreate(PermissionRequiredMixin, CreateView):
     template_name = "pages/main/form.html"
@@ -226,7 +240,7 @@ class CategoryDelete(PermissionRequiredMixin, DeleteView):
         kwargs = super().get_context_data(**kwargs)
         kwargs.update(
             {
-                "title": f'Удаление категории #{self.object.id} {self.object}',
+                "title": f"Удаление категории #{self.object.id} {self.object}",
                 "action": ".",
                 "button": "Удалить",
                 "link": {
@@ -244,13 +258,15 @@ class CategoriesAdminList(PermissionRequiredMixin, ListView):
     permission_required = ["category.view_category"]
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs.update({
-            "active_url":"Категории",
-            "url_id": "product_list",
-            "url_edit":"category_update",
-            "url_delete":"category_delete",
-            "url_create": "category_create"
-        })
+        kwargs.update(
+            {
+                "active_url": "Категории",
+                "url_id": "product_list",
+                "url_edit": "category_update",
+                "url_delete": "category_delete",
+                "url_create": "category_create",
+            }
+        )
         return super().get_context_data(**kwargs)
 
 
@@ -300,7 +316,7 @@ class ProductDelete(PermissionRequiredMixin, DeleteView):
         kwargs = super().get_context_data(**kwargs)
         kwargs.update(
             {
-                "title": f'Удаление товара #{self.object.id} {self.object}',
+                "title": f"Удаление товара #{self.object.id} {self.object}",
                 "action": ".",
                 "button": "Удалить",
                 "link": {
@@ -318,11 +334,13 @@ class ProducsAdminList(PermissionRequiredMixin, ListView):
     permission_required = ["product.view_product"]
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs.update({
-            "active_url":"Товары",
-            "url_id": "product_detail",
-            "url_edit":"product_update",
-            "url_delete":"product_delete",
-            "url_create": "product_create"
-        })
+        kwargs.update(
+            {
+                "active_url": "Товары",
+                "url_id": "product_detail",
+                "url_edit": "product_update",
+                "url_delete": "product_delete",
+                "url_create": "product_create",
+            }
+        )
         return super().get_context_data(**kwargs)
